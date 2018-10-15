@@ -14,6 +14,11 @@ class Employee
     def first_name
         @full_name.split(' ', 2).first
     end
+
+    #Override
+    def to_s
+        @full_name + ', ' + @id.to_s
+    end
 end
 
 class Programmer < Employee
@@ -22,6 +27,11 @@ class Programmer < Employee
     def initialize(full_name, id, languages)
       super(full_name, id)
       @languages = languages
+    end
+
+    #Override
+    def to_s
+        super.to_s + ", " + @languages.to_s
     end
   end
   
@@ -32,23 +42,48 @@ class OfficeManager < Employee
         super(full_name, id)
         @office = office
     end
+
+    #Override
+    def to_s
+        super.to_s + ", " + @office.to_s
+    end
 end
   
 def add_employee(employees)
-    puts "Add an employee"
-    print "Full name: "
-    full_name = gets.chomp
-    print "ID: "
-    id = gets.to_i
+    begin    
+        puts "Add an employee"
+        print "Full name: "
+        full_name = gets.chomp
+        print "ID: "
+        id = gets.to_i
 
-    employee = Employee.new(full_name, id)
+        print "Is the person [e]mployee, [p]rogrammer or [o]ffice manager? "
+        type = get_action
 
+        case type
+        when 'e' then employee = Employee.new(full_name, id)
+        when 'p' then 
+            print "Enter programming languages (seperate by comma): "
+            languages = gets.chomp.split(',')
+            employee = Programmer.new(full_name, id, languages)
+        when 'o' then 
+            print "Enter office address: "
+            office = gets.chomp
+            employee = OfficeManager.new(full_name, id, office)
+        else
+            puts "e -  employee"
+            puts "p -  programmer"
+            puts "o -  office manager"
+        end    
+    end while employee == nil
+    
     employees << employee
 end
 
 def view_employees(employees)
+    return if employees == nil
     sorted_employees(employees).each do |employee|
-        puts "#{employee.full_name}, #{employee.id}"
+        puts employee.to_s
     end
 
 end
