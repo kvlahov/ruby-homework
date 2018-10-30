@@ -1,0 +1,22 @@
+// Place all the styles related to the Authors controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+    padding-left: 1rem;
+    padding-right: 2rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 5px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+td {
+    border-bottom: 1px solid #ddd;
+}
